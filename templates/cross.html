@@ -53,15 +53,30 @@
       <div class="row marketing">
         <div class="col-lg-6">
           <h3>Reassortants with most probability of occurrence:</h3>
-          <p>(1) {{ data["reassortants1"][0] }}</p>
-          <p>(2) {{ data["reassortants1"][1] }}</p>
-          <p>(3) {{ data["reassortants1"][2] }}</p>
+          <p>(1) {{ rea11 }}</p>
+          <p>(2) {{ rea12 }}</p>
+          <p>(3) {{ rea13 }}</p>
+
+          <h3>Reassortants with most high pathogenicity determinants:</h3>
+          <p>(1) {{ rea21 }}</p>
+          <p>(2) {{ rea22 }}</p>
+          <p>(3) {{ rea23 }}</p>
+
+          <h3>Reassortants with least null pathogenicity determinants</h3>
+          <p>(1) {{ rea31 }}</p>
+          <p>(2) {{ rea32 }}</p>
+          <p>(3) {{ rea33 }}</p>
         </div>
         <div class="col-lg-6">
-          <h3>Ratio of Determinants</h3>
-          <p>High: {{ data["representation1"][2] }}</p>
-          <p>Low: {{ data["representation1"][1] }}</p>
-          <p>Null: {{ data["representation1"][0] }}</p>
+          <h3>Ratio of Individual Determinants</h3>
+          <p>High: {{ rep11 }}</p>
+          <p>Low: {{ rep12 }}</p>
+          <p>Null: {{ rep13 }}</p>
+
+          <h3>Ratio of Whole Genomes Based on Majority</h3>
+          <p>High: {{ rep21 }}</p>
+          <p>Low: {{ rep22 }}</p>
+          <p>Null: {{ rep23 }}</p>
         </div>
       </div>
 

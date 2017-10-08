@@ -44,8 +44,29 @@ def cross():
     patho2 = strn2.pathogenicity
     cross = CrossData(strn1, strn2, DETERMINANTS)
     data = cross.data
+    rea11 = str(data["reassortants1"][0])
+    rea12 = str(data["reassortants1"][1])
+    rea13 = str(data["reassortants1"][2])
+    rea21 = str(data["reassortants2"][0])
+    rea22 = str(data["reassortants2"][1])
+    rea23 = str(data["reassortants2"][2])
+    rea31 = str(data["reassortants3"][0])
+    rea32 = str(data["reassortants3"][1])
+    rea33 = str(data["reassortants3"][2])
+    rep11 = str(data["representation1"]["nulls"])
+    rep12 = str(data["representation1"]["lows"])
+    rep13 = str(data["representation1"]["highs"])
+    rep21 = str(data["representation2"]["nulls"])
+    rep22 = str(data["representation2"]["lows"])
+    rep23 = str(data["representation2"]["highs"])
+
     return render_template('cross.html', result1=strain_1, result2=strain_2,
-                            patho1=patho1, patho2=patho2, data=data)
+                            rea11=rea11, rea12=rea12, rea13=rea13,
+                            rea21=rea21, rea22=rea22, rea23=rea23,
+                            rea31=rea31, rea32=rea32, rea33=rea33,
+                            rep11=rep11, rep12=rep12, rep13=rep13,
+                            rep21=rep21, rep22=rep22, rep23=rep23,
+                            rep31=rep31, rep32=rep32, rep33=rep33)
 
 
 if __name__ == "__main__":
