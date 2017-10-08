@@ -5,12 +5,22 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 
 from proteinScraper import *
+from models import *
 import pandas as pd 
 
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
 app.config['SECRET_KEY'] = 'enable-form';
+
+det1 = Determinant(1, "PB2", 627, high='K', low='E')
+det2 = Determinant(1, "PB2", 701, high='N', low='D')
+det3 = Determinant(2, "PB1-F2", 66, high='S', low='N')
+det4 = Determinant(6, "NA", 274, high='Y', low='H')
+det5 = Determinant(8, "NS1", 92, high='E', low='D')
+
+DETERMINANTS = [det1, det2, det3, det4, det5] # Order matters
+
 
 @app.route('/', methods = ['GET'])
 @app.route('/index', methods = ['GET'])
@@ -23,9 +33,9 @@ def input_strains():
 
 @app.route('/seqDetail', methods = ['GET', 'POST'])
 def seq_detail():
-    print("called")
     strain = request.form['strain']
-    return render_template('seqDetail.html', results = strain)
+    strainObj = Strain(strain, DETERMINANTS)
+    return render_template('seqDetail.html', results = strainObj)
 
 @app.route('/crossed', methods = ['GET', 'POST'])
 def cross():

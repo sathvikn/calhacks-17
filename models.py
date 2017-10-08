@@ -2,6 +2,23 @@ import numpy as np
 import pandas as pd
 from sklearn.utils.extmath import cartesian
 
+df = pd.read_excel("data.xls")
+
+def drop_after_year(drop_year, df):
+    old_indices = []
+    for i in np.arange(len(df.index)):
+        strain_name = df.iloc[i][0]
+        year = 0
+        try:
+            year = int(strain_name[len(strain_name) - 4:len(strain_name)])
+        except ValueError:
+            year += 1
+        if int(year) < drop_year:
+            old_indices.append(i)
+    cleaned_years = df.drop(df.index[old_indices])
+    return cleaned_years
+
+recent_strains = drop_after_year(2000, df)
 
 class Determinant(object):
 
@@ -19,7 +36,7 @@ class Strain(object):
         self.name = name # String
         self.determinants = determinants # List <Determinant Object>
 
-        self.segments = {} # Dictionary <Segment Number [Integer] : Genomic Accession [String]>
+        self.segments = {1:'', 2: '', 6: '', 8: ''} # Dictionary <Segment Number [Integer] : Genomic Accession [String]>
         self.populate_segments()
 
         '''We only care about the segments that we have determinants on (1, 2, 6, 8)'''
@@ -28,7 +45,11 @@ class Strain(object):
 
     def populate_segments(self):
         # Use pandas to populate self.segments
-
+        row = recent_strains.loc[recent_strains['Strain Name'] == name]
+        for i in np.arange(len(row.values[0])):
+            if i in segments:
+                segments[i] = row.values[0][i]
+                
     def populate_pathogenicity(self):
         for determinant in self.determinants:
             seq = self.sequence(self.segments[determinant.segment])
@@ -37,7 +58,7 @@ class Strain(object):
 
     def sequence(self, genomic_acc):
         # Use scraper to return the protein sequence
-
+        pass
     def assess_value(self, seq, det):
         seq_residue = seq[det.residue] # Check if indexing is correct
         if seq_residue == det.high:
@@ -102,19 +123,19 @@ class CrossData(object):
 
     def get_reassortants1(self):
         # Create bin for each occurrence of an array using det_matrix
-
+        pass
     def get_reassortants2(self):
-        # Keep track of index and number of twos using det_bin
-
+        #Keep track of index and number of twos using det_bin
+        pass
     def get_reassortants3(self):
         # Keep track of index and number of zeros using det_bin
-
+        pass
     def get_representation1(self):
         # Compress det_bin to number of zeros, ones, and twos
-
+        pass
     def get_representation2(self):
         # Compress det_matrix to majority zeros, ones, and twos
-
+        pass
 
 det1 = Determinant(1, "PB2", 627, high='K', low='E')
 det2 = Determinant(1, "PB2", 701, high='N', low='D')
