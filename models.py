@@ -1,4 +1,6 @@
+import numpy as np
 import pandas as pd
+from sklearn.utils.extmath import cartesian
 
 
 class Determinant(object):
@@ -44,6 +46,74 @@ class Strain(object):
             return 1
         else:
             return 0
+
+
+class CrossData(object):
+
+    def __init__(self, strain_one, strain_two, determinants):
+        self.strain_one = strain_one
+        self.strain_two = strain_two
+        self.determinants = determinants
+        self.cross_matrix = cartesian((np.array([[1, 2],] * 8)))
+        self.det_matrix = np.zeros((256, 5), dtype=int)
+        self.populate_det_matrix()
+        self.det_bin = np.zeros((256, 3), dtype=int)
+        self.populate_det_bin()
+        self.data = self.run_analysis() # Dictionary
+
+    def populate_det_matrix(self):
+        for j in range(5):
+            det = self.determinants[j]
+            seg = det.segment
+            for i in range(256):
+                parent = self.cross_matrix[i][seg]
+                if parent == 1:
+                    strain = self.strain_one
+                if parent == 2:
+                    strain = self.strain_two
+                value = strain.pathogenicity[j]
+                self.det_matrix[i][j] = value
+
+    def populate_det_bin(self):
+        for i in range(256):
+            zeros = 0
+            ones = 0
+            twos = 0
+            for j in range(5):
+                det = self.det_matrix[i][j]
+                if det == 0:
+                    zeros += 1
+                if det == 1:
+                    ones += 1
+                if det == 2:
+                    twos += 1
+            self.det_bin[i][0] = zeros
+            self.det_bin[i][1] = ones
+            self.det_bin[i][2] = twos
+
+    def run_analysis(self):
+        output = {}
+        output["reassortants1"] = self.get_reassortants1() # List of cross_matrix indices
+        output["reassortants2"] = self.get_reassortants2() # List of cross_matrix indices
+        output["reassortants3"] = self.get_reassortants3() # List of cross_matrix indices
+        output["representation1"] = self.get_representation1() # Dictionary
+        output["representation2"] = self.get_represetnation2() # Dictionary
+        return output
+
+    def get_reassortants1(self):
+        # Create bin for each occurrence of an array using det_matrix
+
+    def get_reassortants2(self):
+        # Keep track of index and number of twos using det_bin
+
+    def get_reassortants3(self):
+        # Keep track of index and number of zeros using det_bin
+
+    def get_representation1(self):
+        # Compress det_bin to number of zeros, ones, and twos
+
+    def get_representation2(self):
+        # Compress det_matrix to majority zeros, ones, and twos
 
 
 det1 = Determinant(1, "PB2", 627, high='K', low='E')
