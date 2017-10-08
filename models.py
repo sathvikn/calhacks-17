@@ -60,11 +60,14 @@ class Strain(object):
         for determinant in self.determinants:
             seq = ""
             if determinant.segment == 2:
-                seq = self.sequence(self.segments[determinant.segment.split(',')[0]])
+                seq = self.sequence(self.segments[determinant.segment].split(',')[0])
             elif determinant.segment == 8:
-                seq = self.sequence(self.segments[determinant].segment.split(',')[1])
+                try:
+                    seq = self.sequence(self.segments[determinant.segment].split(',')[1])
+                except IndexError:
+                    seq = self.sequence(self.segments[determinant.segment].split(',')[0])
             else:
-                seq = self.sequence(self.segments[determinant.segment.split(',')[0]])
+                seq = self.sequence(self.segments[determinant.segment].split(',')[0])
             value = self.assess_value(seq, determinant)
             self.pathogenicity.append(value)
 
