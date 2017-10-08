@@ -2,6 +2,19 @@ from bs4 import BeautifulSoup
 import requests
 import re
 
+def get_seq_link(genomic_acc):
+    url = 'https://www.fludb.org/brc/fluSegmentDetails.spg?ncbiGenomicAccession='+str(genomic_acc)
+    r = requests.get(url)
+    data = r.text
+    soup = BeautifulSoup(data, 'lxml')
+    link = "https://www.fludb.org"
+    for i in soup.find_all('a'):
+        if "View Sequence" in i:            
+            link += i.get('href');
+            break
+    return link;
+link = get_seq_link('GQ200230')
+
 def get_protein_seq(url):
     r = requests.get(url)
     data = r.text
@@ -13,4 +26,4 @@ def get_protein_seq(url):
     return protein_seq
 
 #Test call
-print(get_protein_seq('https://www.fludb.org/brc/proteinSequence.spg?ncbiProteinId=IRD_1095423276_130_2286&decorator=influenza'))
+print(get_protein_seq(link))
