@@ -26,4 +26,4 @@ def get_protein_seq(url):
     return protein_seq
 
 #Test call
-print(get_protein_seq(link))
+#print(get_protein_seq(link))
