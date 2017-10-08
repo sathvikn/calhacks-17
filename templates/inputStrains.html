@@ -12,9 +12,24 @@
   </head>
   <body>
     <div class='container' style='text-align: center;'>
-      <h1>Welcome!</h1>
-      <p>Explanatory Text</p>
-      <a href='inputStrains'>Get started</a>
+      <div class='col-md-6'>
+        <form action="/seqDetail"; method="post">
+        <p>Enter Strain Name Here:</p>
+          <p>
+          <input type='text' name='strain'>
+          </p>
+          <p><input type="submit" value="Learn More"></p>
+        </form>
+      </div>
+      <div class='col-md-6'>
+        <form action="/seqDetail"; method="post" name="strain">
+          <p>Enter Strain Name Here:</p>
+            <p>
+            <input type='text' name='strain'>
+            </p>
+            <p><input type="submit" value="Learn More"></p>
+        </form>
+      </div>
     </div>
   </body>
 </html>
