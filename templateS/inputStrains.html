@@ -1,0 +1,47 @@
+<html>
+  <head>
+  <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>  
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Virulence</title>
+  </head>
+  <body>
+    <div class='container' style='text-align: center;'>
+      <div class='learn-one'>
+        <h4>Find out about a strain of the flu here</h4>
+        <form action="/seqDetail"; method="post">
+          <p>Enter Strain Name Here:</p>
+            <p>
+            <input type='text' name='strain'>
+            </p>
+            <p><input type="submit" value="Learn More"></p>
+        </form>
+      </div>
+      <div class='cross'>
+        <h4>Viruses' genes can mutate faster than we can expect! This is why it's important to know about what happens when two strains get crossed with one another.</h4>
+        <form action='/crossed'; method='post'>
+        <div class='col-md-6'>
+          <p>Strain 1</p>
+          <p>
+          <input type='text' name='strain-1'>
+           </p>
+        </div>
+        <div class='col-md-6'>
+          <p>Strain 2</p>
+          <p>
+            <input type='text' name='strain-2'>
+          </p>
+        </div>
+        <input type='submit' value='Cross'>
+    </div>
+  </body>
+</html>
+
+
+    
