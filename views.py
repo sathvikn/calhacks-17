@@ -35,7 +35,8 @@ def input_strains():
 def seq_detail():
     strain = request.form['strain']
     strainObj = Strain(strain, DETERMINANTS)
-    return render_template('seqDetail.html', results = strainObj)
+    pathogenicity = strainObj.pathogenicity
+    return render_template('seqDetail.html', results = strainObj, zeroes=pathogenicity.count(0), ones=pathogenicity.count(1), twos=pathogenicity.count(2))
 
 @app.route('/crossed', methods = ['GET', 'POST'])
 def cross():

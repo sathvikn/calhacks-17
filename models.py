@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 from sklearn.utils.extmath import cartesian
+from proteinScraper import *
 
 df = pd.read_excel("data.xls")
 
@@ -45,10 +46,10 @@ class Strain(object):
 
     def populate_segments(self):
         # Use pandas to populate self.segments
-        row = recent_strains.loc[recent_strains['Strain Name'] == name]
+        row = recent_strains.loc[recent_strains['Strain Name'] == self.name]
         for i in np.arange(len(row.values[0])):
-            if i in segments:
-                segments[i] = row.values[0][i]
+            if i in self.segments:
+                self.segments[i] = row.values[0][i]
                 
     def populate_pathogenicity(self):
         for determinant in self.determinants:
@@ -59,7 +60,7 @@ class Strain(object):
     def sequence(self, genomic_acc):
         # Use scraper to return the protein sequence
         return get_protein_seq(get_seq_link(genomic_acc))
-        
+
     def assess_value(self, seq, det):
         seq_residue = seq[det.residue] # Check if indexing is correct
         if seq_residue == det.high:
