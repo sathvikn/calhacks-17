@@ -101,13 +101,40 @@ class CrossData(object):
         return output
 
     def get_reassortants1(self):
-        # Create bin for each occurrence of an array using det_matrix
+        genome_bin = []
+        genome_occurrences = []
+        for i in range(256):
+            genome = self.det_matrix[i]
+            if genome not in genome_bin:
+                genome_bin.append(genome)
+                genome_occurrences.append(1)
+            else:
+                index = genome_bin.index(genome)
+                genome_occurrences[index] += 1
+        sorted_indices = sorted(range(len(genome_occurrences)), key=lambda i: a[i], reverse=True)
+        return sorted_indices[:10]
 
     def get_reassortants2(self):
-        # Keep track of index and number of twos using det_bin
+        num_twos = []
+        for i in range(256):
+            twos = 0
+            for j in range(5):
+                if self.det_bin[i][j] == 2:
+                    twos += 1
+            num_twos.append(twos)
+        sorted_indices = sorted(range(len(num_twos)), key=lambda i: a[i], reverse=True)
+        return sorted_indices[:10]
 
     def get_reassortants3(self):
-        # Keep track of index and number of zeros using det_bin
+        num_zeros = []
+        for i in range(256):
+            zeros = 0
+            for j in range(5):
+                if self.det_bin[i][j] == 0:
+                    zeros += 1
+            num_zeros.append(zeros)
+        sorted_indices = sorted(range(len(num_zeros)), key=lambda i: a[i], reverse=True)
+        return sorted_indices[:10]
 
     def get_representation1(self):
         # Compress det_bin to number of zeros, ones, and twos
