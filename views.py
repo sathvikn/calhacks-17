@@ -45,7 +45,7 @@ def cross():
 #    cross = CrossData(strn1, strn2, DETERMINANTS)
 #    data = cross.data
 #    return render_template('cross.html', result1=strain_1, result2=strain_2,
-                            patho1=patho1, patho2=patho2, data=data)
+#                            patho1=patho1, patho2=patho2, data=data)
     return render_template('cross.html', result1=strain_1, result2=strain_2)
 
 
