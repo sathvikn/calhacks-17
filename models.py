@@ -1,3 +1,5 @@
+from collections import Counter
+
 import numpy as np
 import pandas as pd
 from sklearn.utils.extmath import cartesian
@@ -115,32 +117,34 @@ class CrossData(object):
         return sorted_indices[:10]
 
     def get_reassortants2(self):
-        num_twos = []
-        for i in range(256):
-            twos = 0
-            for j in range(5):
-                if self.det_bin[i][j] == 2:
-                    twos += 1
-            num_twos.append(twos)
-        sorted_indices = sorted(range(len(num_twos)), key=lambda i: a[i], reverse=True)
+        highs = [self.det_bin[i][2] for i in range(256)]
+        sorted_indices = sorted(range(len(highs)), key=lambda i: a[i], reverse=True)
         return sorted_indices[:10]
 
     def get_reassortants3(self):
-        num_zeros = []
-        for i in range(256):
-            zeros = 0
-            for j in range(5):
-                if self.det_bin[i][j] == 0:
-                    zeros += 1
-            num_zeros.append(zeros)
-        sorted_indices = sorted(range(len(num_zeros)), key=lambda i: a[i], reverse=True)
+        nulls = [self.det_bin[i][0] for i in range(256)]
+        sorted_indices = sorted(range(len(nulls)), key=lambda i: a[i], reverse=True)
         return sorted_indices[:10]
 
     def get_representation1(self):
-        # Compress det_bin to number of zeros, ones, and twos
+        representation = {}
+        nulls, lows, highs = 0, 0, 0
+        for i in range(256):
+            nulls += self.det_bin[i][0]
+            lows += self.det_bin[i][1]
+            highs += self.det_bin[i][2]
+        representation["nulls"] = nulls
+        representation["lows"] = lows
+        representation["highs"] = highs
 
     def get_representation2(self):
-        # Compress det_matrix to majority zeros, ones, and twos
+        representation = {}
+        majorities = [np.argmax(self.det_bin[i]) for i in range(256)]
+        frequencies = Counter(majorities)
+        representation["nulls"] = frequencies[0]
+        representation["lows"] = frequencies[1]
+        representation["highs"] = frequencies[2]
+        return representation
 
 
 det1 = Determinant(1, "PB2", 627, high='K', low='E')
