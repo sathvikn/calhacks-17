@@ -103,7 +103,7 @@ class CrossData(object):
             det = self.determinants[j]
             seg = det.segment
             for i in range(256):
-                parent = self.cross_matrix[i][seg]
+                parent = self.cross_matrix[i][seg-1]
                 if parent == 1:
                     strain = self.strain_one
                 if parent == 2:
@@ -134,7 +134,7 @@ class CrossData(object):
         output["reassortants2"] = self.get_reassortants2() # List of cross_matrix indices
         output["reassortants3"] = self.get_reassortants3() # List of cross_matrix indices
         output["representation1"] = self.get_representation1() # Dictionary
-        output["representation2"] = self.get_represetnation2() # Dictionary
+        output["representation2"] = self.get_representation2() # Dictionary
         return output
 
     def get_reassortants1(self):
@@ -142,23 +142,24 @@ class CrossData(object):
         genome_occurrences = []
         for i in range(256):
             genome = self.det_matrix[i]
-            if genome not in genome_bin:
-                genome_bin.append(genome)
-                genome_occurrences.append(1)
-            else:
-                index = genome_bin.index(genome)
-                genome_occurrences[index] += 1
+            for elem in genome_bin:
+                if not np.array_equal(genome, elem):
+                    genome_bin.append(genome)
+                    genome_occurrences.append(1)
+                else:
+                    index = genome_bin.index(genome)
+                    genome_occurrences[index] += 1
         sorted_indices = sorted(range(len(genome_occurrences)), key=lambda i: a[i], reverse=True)
         return sorted_indices[:10]
 
     def get_reassortants2(self):
         highs = [self.det_bin[i][2] for i in range(256)]
-        sorted_indices = sorted(range(len(highs)), key=lambda i: a[i], reverse=True)
+        sorted_indices = sorted(range(len(highs)), key=lambda i: highs[i], reverse=True)
         return sorted_indices[:10]
 
     def get_reassortants3(self):
         nulls = [self.det_bin[i][0] for i in range(256)]
-        sorted_indices = sorted(range(len(nulls)), key=lambda i: a[i], reverse=True)
+        sorted_indices = sorted(range(len(nulls)), key=lambda i: nulls[i], reverse=True)
         return sorted_indices[:10]
 
     def get_representation1(self):
