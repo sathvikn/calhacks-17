@@ -3,7 +3,9 @@ from collections import Counter
 import numpy as np
 import pandas as pd
 from sklearn.utils.extmath import cartesian
+
 from proteinScraper import *
+
 
 df = pd.read_excel("data.xls")
 
@@ -22,6 +24,7 @@ def drop_after_year(drop_year, df):
     return cleaned_years
 
 recent_strains = drop_after_year(2000, df)
+
 
 class Determinant(object):
 
