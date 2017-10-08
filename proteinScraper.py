@@ -13,7 +13,7 @@ def get_seq_link(genomic_acc):
             link += i.get('href');
             break
     return link;
-link = get_seq_link('GQ200230')
+link = get_seq_link('KT837622')
 
 def get_protein_seq(url):
     r = requests.get(url)
