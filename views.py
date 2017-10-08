@@ -13,6 +13,7 @@ app = Flask(__name__)
 app.config['DEBUG'] = True
 app.config['SECRET_KEY'] = 'enable-form';
 
+
 det1 = Determinant(1, "PB2", 627, high='K', low='E')
 det2 = Determinant(1, "PB2", 701, high='N', low='D')
 det3 = Determinant(2, "PB1-F2", 66, high='S', low='N')
@@ -27,22 +28,25 @@ DETERMINANTS = [det1, det2, det3, det4, det5] # Order matters
 def index():
     return render_template('index.html')
 
+
 @app.route('/inputStrains', methods = ['GET'])
 def input_strains():
     return render_template('inputStrains.html')
 
-@app.route('/seqDetail', methods = ['GET', 'POST'])
-def seq_detail():
-    strain = request.form['strain']
-    strainObj = Strain(strain, DETERMINANTS)
-    pathogenicity = strainObj.pathogenicity
-    return render_template('seqDetail.html', results = strainObj, zeroes=pathogenicity.count(0), ones=pathogenicity.count(1), twos=pathogenicity.count(2))
 
-@app.route('/crossed', methods = ['GET', 'POST'])
+@app.route('/cross', methods = ['GET', 'POST'])
 def cross():
     strain_1 = request.form['strain-1']
     strain_2 = request.form['strain-2']
-    return render_template('crossed.html', result1 = strain_1, result2 = strain_2)
+    strn1 = Strain(strain_1, DETERMINANTS)
+    strn2 = Strain(strain_2, DETERMINANTS)
+    patho1 = strn1.pathogenicity
+    patho2 = strn2.pathogenicity
+    cross = CrossData(strn1, strn2, DETERMINANTS)
+    data = cross.data
+    return render_template('cross.html', result1=strain_1, result2=strain_2,
+                            patho1=patho1, patho2=patho2, data=data)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
