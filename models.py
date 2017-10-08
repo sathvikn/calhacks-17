@@ -58,7 +58,13 @@ class Strain(object):
                 
     def populate_pathogenicity(self):
         for determinant in self.determinants:
-            seq = self.sequence(self.segments[determinant.segment])
+            seq = ""
+            if determinant.segment == 2:
+                seq = self.sequence(self.segments[determinant.segment.split(',')[0]])
+            elif determinant.segment == 8:
+                seq = self.sequence(self.segments[determinant].segment.split(',')[1])
+            else:
+                seq = self.sequence(self.segments[determinant.segment.split(',')[0]])
             value = self.assess_value(seq, determinant)
             self.pathogenicity.append(value)
 
