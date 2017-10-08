@@ -50,6 +50,21 @@
         </div>
       </div>
 
+      <div class="row marketing">
+        <div class="col-lg-6">
+          <h3>Reassortants with most probability of occurrence:</h3>
+          <p>(1) {{ data["reassortants1"][0] }}</p>
+          <p>(2) {{ data["reassortants1"][1] }}</p>
+          <p>(3) {{ data["reassortants1"][2] }}</p>
+        </div>
+        <div class="col-lg-6">
+          <h3>Ratio of Determinants</h3>
+          <p>High: {{ data["representation1"][2] }}</p>
+          <p>Low: {{ data["representation1"][1] }}</p>
+          <p>Null: {{ data["representation1"][0] }}</p>
+        </div>
+      </div>
+
       <footer class="footer">
         <p>&copy; 2017</p>
       </footer>
